@@ -1,0 +1,24 @@
+.add-field-modal .modal-title {
+    color: #AAA;
+    font-size: 16px;
+}
+
+.add-field-modal  .modal-title .profile-name {
+    color: #AAA;
+    font-size: 10px;
+}
+
+.form-field {
+    color: #AAA;
+    font-size: 12px;
+}
+
+.form-field-black {
+    color: black;
+    font-size: 12px;
+}
+
+.add-field-button {
+    background: #01A3D4;
+    font-size: 12px;
+}

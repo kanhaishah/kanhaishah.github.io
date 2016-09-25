@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Almabase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="src/css/main.css" rel="stylesheet" media="screen">
+    <link href="src/css/profile.css" rel="stylesheet" media="screen">
+    <link href="src/css/leftSideBar.css" rel="stylesheet" media="screen">
+    <link href="src/css/rightSideBar.css" rel="stylesheet" media="screen">
+    <link href="src/css/addFieldModal.css" rel="stylesheet" media="screen">
+    <link href="src/css/sectionModal.css" rel="stylesheet" media="screen">
+</head>
+<body ng-app="almabaseApp">
+    <div class="container-fluid">
+        <div ng-view class="view-animate">
+
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="   crossorigin="anonymous"></script>
+    <script src="vendor/js/angular.min.js"></script>
+    <script src="vendor/js/angular-route.min.js"></script>
+    <script src="vendor/js/angular-animate.min.js"></script>
+    <script src="vendor/js/ui-bootstrap.min.js"></script>
+    <script src="vendor/js/ngDraggable.js"></script>
+    <script src="vendor/js/sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/lodash/4.16.1/lodash.min.js"></script>
+    <script src="src/js/app.js"></script>
+    <script src="src/js/values/profile.js"></script>
+    <script src="src/js/services/profile.js"></script>
+    <script src="src/js/controllers/fieldModalController.js"></script>
+    <script src="src/js/controllers/sectionModalController.js"></script>
+    <script src="src/js/controllers/deleteModalController.js"></script>
+    <script src="src/js/controllers/profilerController.js"></script>
+</body>
+</html>

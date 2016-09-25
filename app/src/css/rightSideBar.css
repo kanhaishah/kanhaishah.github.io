@@ -1,0 +1,80 @@
+#right-sidebar {
+    background: #F3F7FA;
+    padding: 0;
+}
+
+#right-sidebar .search-bar {
+    background: #fefefe;
+    margin-top: 5px;
+    box-shadow: 1px 0 1px 0 #eee;
+    height: 40px;
+}
+
+#right-sidebar .profile-container {
+    margin-top: 20px;
+}
+
+#right-sidebar .profile-container  .add-section {
+    font-size: 10px;
+    color: #88D4DF;
+    margin: 0 10px;
+}
+
+#right-sidebar .profile-container > .panel-heading {
+    background: #fff;
+    height: 60px;
+    color: #888;
+}
+
+.drag-container .panel > .panel-heading .profile-action {
+    font-size: 10px;
+    color: #CDCDCD;
+    margin: 0 10px;
+}
+
+.drag-container .panel > .panel-heading .add-fields {
+    font-size: 10px;
+    color: #88D4DF;
+    margin: 0 10px;
+}
+
+.drag-container .panel > .panel-heading .profile-name {
+    font-size: 14px;
+    color: #989898;
+}
+
+.drag-container .panel > .panel-body {
+    min-height: 200px;
+    height: 100%;
+}
+
+.drag-container .panel > .panel-body .profile-field {
+    background: #846ad5;
+    width: 150px;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 13px;
+    margin: 0 10px;
+}
+
+.drag-container .panel > .panel-body .cursor-pointer {
+    cursor: pointer;
+}
+
+.drag-container .panel > .panel-body .profile-no-field {
+    color: #D2D2D2;
+    position: absolute;
+    margin: 10% 40%;
+    display: inline-block;
+    line-height: normal;
+}
+
+.drag-container > .panel {
+    border-style: dashed;
+}
+
+.drag-container > .panel .inner-drag-container {
+    display: inline-block;
+}
