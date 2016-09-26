@@ -1,6 +1,7 @@
 #right-sidebar {
     background: #F3F7FA;
     padding: 0;
+    overflow-y: auto;
 }
 
 #right-sidebar .search-bar {
@@ -54,7 +55,7 @@
     padding: 10px;
     color: #fff;
     border-radius: 5px;
-    display: inline-block;
+    float: left;
     font-size: 13px;
     margin: 0 10px;
 }
@@ -76,5 +77,5 @@
 }
 
 .drag-container > .panel .inner-drag-container {
-    display: inline-block;
+    float: left;
 }

@@ -1,4 +1,1 @@
-app.value('profileValue', [{
-   'name' : 'BioData',
-   'fields' : []
-}]);
+app.value('profileValue', []);

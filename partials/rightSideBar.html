@@ -7,15 +7,15 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">Profile View
-                <span class="add-section pull-right" ng-click="addNewProfile()">ADD SECTION</span>
+                <span class="add-section pull-right" ng-click="addSection()">ADD SECTION</span>
             </div>
             <div class="panel-body">
-                <div class="drop-container" ui-sortable ng-model="profiles">
+                <div class="drop-container" ui-sortable="sortableOptionsParent" ng-model="profiles">
                     <div class="drag-container" ng-repeat="profile in profiles">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <span class="profile-name">{{profile.name}}</span>
-                                <span class="profile-action">EDIT SECTION</span>
+                                <span class="profile-name">{{profile.nameVal}}</span>
+                                <span class="profile-action" ng-click="editSection($index)">EDIT SECTION</span>
                                 <span class="profile-action" ng-click="deleteSection(profile)">DELETE SECTION</span>
                                 <span class="profile-action">MOVE SECTION</span>
                                 <span class="add-fields pull-right" ng-click="addFields($index)">ADD FIELDS </span>
@@ -23,7 +23,8 @@
                             <div class="panel-body">
                                 <div ng-show="profile.fields.length" ui-sortable class="inner-droppable">
                                     <div class="inner-drag-container" ng-repeat="field in profile.fields track by $index">
-                                        <div class="profile-field">{{field.fieldName}} <span class="cursor-pointer pull-right" ng-click="removeField(field, profile)">&times;</span></div>
+                                        <div class="profile-field">
+                                           {{field.name}} <span class="cursor-pointer pull-right" ng-click="removeField(field, profile)">&times;</span></div>
                                     </div>
                                 </div>
 
@@ -46,7 +47,7 @@
         <form>
             <div class="form-group">
                 <label for="fieldName" class="form-field-black">FIELD NAME</label>
-                <input type="text" class="form-control form-field" ng-model="selectedItem.fieldName" id="fieldName" placeholder="Field Name">
+                <input type="text" class="form-control form-field" ng-model="selectedItem.name" id="fieldName" placeholder="Field Name">
             </div>
             <div class="form-group">
                 <label for="property" class="form-field-black">CHOOSE PROPERTY</label>
@@ -64,7 +65,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning add-field-button" type="button" ng-click="cancel()">CANCEL</button>
-        <button class="btn btn-primary add-field-button" type="button" ng-click="addFields()">ADD</button>
+        <button class="btn btn-primary add-field-button" type="button" ng-disabled="!selectedItem.name || !isFieldNameValid()" ng-click="addFields()">ADD</button>
     </div>
 </script>
 </div>
@@ -77,17 +78,17 @@
         <div class="modal-body" id="section-body">
             <form>
                 <div class="form-group">
-                    <label for="sectionName" class="form-field-black">FIELD NAME</label>
-                    <input type="text" class="form-control form-field" ng-model="selectedItem.sectionName" id="sectionName" placeholder="Section Name">
+                    <label for="sectionName" class="form-field-black">SECTION NAME</label>
+                    <input type="text" class="form-control form-field" ng-model="profile.nameVal" id="sectionName" placeholder="Section Name">
                 </div>
                 <div class="form-group">
                     <label for="property" class="form-field-black">ORDER POSITION</label>
                     <div>
-                        <select ng-model="selectedItem.direction" class="form-control form-field first-section">
+                        <select ng-model="profile.direction" class="form-control form-field first-section">
                             <option>above</option>
                             <option>below</option>
                         </select>
-                        <select class="form-control second-section form-field" ng-options="profile as profile.name for profile in profiles track by $index" ng-model="selectedItem.profile"></select>
+                        <select class="form-control second-section form-field" ng-options="profile as profile.name for profile in profiles track by $index" ng-model="profile.name"></select>
                     </div>
                 </div>
             </form>
@@ -95,7 +96,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-warning add-field-button" type="button" ng-click="cancel()">CANCEL</button>
-            <button class="btn btn-primary add-field-button" type="button" ng-click="addFields()">ADD</button>
+            <button class="btn btn-primary add-field-button" type="button" ng-disabled="!profile.nameVal || !isSectionNameValid()" ng-click="addSection()">ADD</button>
         </div>
     </script>
 </div>
@@ -114,3 +115,37 @@
         </div>
     </script>
 </div>
+
+<div>
+    <script type="text/ng-template" id="editModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="edit-title">EDIT SECTION</h3>
+        </div>
+        <div class="modal-body" id="edit-body">
+            <form>
+                <div class="form-group">
+                    <label for="sectionName" class="form-field-black">SECTION NAME</label>
+                    <input type="text" class="form-control form-field" ng-model="profile.nameVal" id="sectionName" placeholder="Section Name">
+                </div>
+                <div class="form-group">
+                    <label for="property" class="form-field-black">ORDER POSITION</label>
+                    <div>
+                        <select ng-model="profile.direction" class="form-control form-field first-section">
+                            <option>above</option>
+                            <option>below</option>
+                        </select>
+                        <select ng-model="profile.name" class="form-control second-section form-field">
+                            <option ng-repeat="pro in profiles" value="{{pro.nameVal}}">{{pro.nameVal}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning add-field-button" type="button" ng-click="cancel()">CANCEL</button>
+            <button class="btn btn-primary add-field-button" type="button" ng-disabled="!profile.nameVal || !isFieldNameValidForEdit()" ng-click="saveChanges()">SAVE CHANGES</button>
+        </div>
+    </script>
+</div>
+

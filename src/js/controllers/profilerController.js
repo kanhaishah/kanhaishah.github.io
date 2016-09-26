@@ -1,23 +1,24 @@
-app.controller('profileController', ['$scope', 'profile', '$uibModal', '$document', '$timeout', function($scope, profile, $uibModal, $document, $timeout){
+app.controller('profileController', ['$scope', 'profile', '$uibModal', '$document', 'utility',  function($scope, profile, $uibModal, $document, utility){
     $scope.profiles = profile.getProfiles();
-    $scope.isParentDraggable = true;
-    $scope.isChildDraggable = true;
-    $scope.backedUpProfiles = [];
-    $scope.onDropComplete = function (index, obj, evt) {
-            var otherObj = $scope.profiles[index];
-            var otherIndex = $scope.profiles.indexOf(obj);
-            $scope.profiles[index] = obj;
-            $scope.profiles[otherIndex] = otherObj;
+    $scope.sortableOptionsParent = {
+        stop: function() {
+            $scope.shuffleProfiles();
+        }
     };
 
-    $scope.onDropCompleteField = function (index, obj, evt) {
-        var targetIndex = index;
-        var targetNode = JSON.parse(evt.element[0].attributes.getNamedItem('node-name').nodeValue);
-        var srcIndex = _.findIndex(obj.fields, function(field) { return field.name === targetNode.name; });
-        var tempNode = obj.fields[srcIndex];
-        obj.fields[srcIndex] = obj.fields[targetIndex];
-        obj.fields[targetIndex] = tempNode;
+    $scope.shuffleProfiles = function() {
+        if($scope.profiles.length === 1) return;
+        $scope.profiles.forEach(function(profile, i){
+                if(i === $scope.profiles.length - 1) {
+                    profile.direction = 'below';
+                    profile.name = $scope.profiles[i-1].nameVal;
+                }else {
+                    profile.direction = 'above';
+                    profile.name = $scope.profiles[i + 1].nameVal;
+                }
+        });
     };
+
     $scope.addFields = function(index) {
         var modalInstance = $uibModal.open({
             animation: true,
@@ -43,7 +44,29 @@ app.controller('profileController', ['$scope', 'profile', '$uibModal', '$documen
     $scope.removeField = function(field, profile) {
         profile.fields.splice(profile.fields.indexOf(field), 1);
     };
-    $scope.addNewProfile = function() {
+
+    $scope.editSection = function(index) {
+        var resolve = {
+            profile: function () {
+                return $scope.profiles[index];
+            },
+            profiles: function () {
+                return $scope.profiles;
+            }
+        };
+        var modalInstance = utility.instantiateModal(utility.createModalSettingsObject('edit-title', 'edit-body', 'editModal.html', 'editModalController', $document.find('#right-sidebar'),
+            'edit-field-modal', resolve));
+
+
+
+        modalInstance.result.then(function (profileVal) {
+            profile.editProfile(profileVal, index);
+            $scope.profiles = profile.getProfiles();
+            $scope.shuffleProfiles();
+        });
+
+    };
+    $scope.addSection = function() {
         var modalInstance = $uibModal.open({
             animation: true,
             ariaLabelledBy: 'section-title',
@@ -61,8 +84,14 @@ app.controller('profileController', ['$scope', 'profile', '$uibModal', '$documen
 
         modalInstance.result.then(function (selectedItem) {
             var isAbove = (selectedItem.direction === 'above');
-            profile.addProfile(isAbove, (selectedItem.profile) ? selectedItem.profile.name : '', selectedItem.sectionName);
+            if(!$scope.profiles.length) {
+                profile.addProfile(true, selectedItem.nameVal, selectedItem.nameVal);
+            }else {
+                profile.addProfile(isAbove, selectedItem.nameVal, selectedItem.name);
+            }
+
             $scope.profiles = profile.getProfiles();
+            $scope.shuffleProfiles();
         });
 
     };
@@ -85,6 +114,8 @@ app.controller('profileController', ['$scope', 'profile', '$uibModal', '$documen
             $scope.profiles.splice(index,1);
 
             profile.setProfiles($scope.profiles);
+            $scope.profiles = profile.getProfiles();
+            $scope.shuffleProfiles();
         });
 
     };
